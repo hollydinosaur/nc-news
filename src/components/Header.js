@@ -4,6 +4,7 @@ const Header = () => {
 		<main>
 			<header>
 				<h1>NC News</h1>
+				<h2>Now only 32% fake news!</h2>
 			</header>
 		</main>
 	);
