@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getAllUsers } from "../utils/usersApi";
+import { Link } from "react-router-dom";
 
 const AllUsers = () => {
 	const [users, setUsers] = useState([]);
@@ -16,7 +17,9 @@ const AllUsers = () => {
 				{users.map((user) => {
 					return (
 						<ul>
-							<li key={`${user.username}`}>Username: {user.username}</li>
+							<Link to={`/users/${user.username}`}>
+								<li key={`${user.username}`}>Username: {user.username}</li>
+							</Link>
 							<li key={`${user.username}Name`}>Name: {user.name}</li>
 							<img
 								src={user.avatar_url}

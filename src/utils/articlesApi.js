@@ -44,3 +44,16 @@ export const downVoteArticle = (id) => {
 		return res.data;
 	});
 };
+
+export const addComment = ({ article_id, username, body }) => {
+	console.log(username);
+	return articlesApi
+		.post(`/${article_id}`, { username: username, body: body })
+		.then((res) => {
+			console.log(res.data);
+			return res.data;
+		})
+		.then((err) => {
+			console.log(err);
+		});
+};

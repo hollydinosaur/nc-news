@@ -15,3 +15,9 @@ export const downVoteComment = (id) => {
 		return res;
 	});
 };
+
+export const deleteComment = (id) => {
+	return commentsApi.delete(`/${id}`).then((res) => {
+		return res;
+	});
+};

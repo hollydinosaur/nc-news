@@ -20,3 +20,14 @@ export const getUserByUsername = (username) => {
 			console.log(err);
 		});
 };
+
+export const getCommentsByUser = (username) => {
+	return usersApi
+		.get(`/${username}/comments`)
+		.then((res) => {
+			return res.data.comments;
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+};

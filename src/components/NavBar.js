@@ -14,9 +14,9 @@ const NavBar = () => {
 		<main>
 			<section className="NavBar">
 				<Link to="/">
-					<span>Home</span>
+					<span>All Articles</span>
 				</Link>
-				<Link to="/users">
+				<Link to="/users/allusers">
 					<span>View All Users</span>
 				</Link>
 				<Link to={link}>
