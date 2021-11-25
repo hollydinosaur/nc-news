@@ -24,7 +24,7 @@ export const UserCommentGenerator = ({
 							if (article.article_id === comment.article_id) {
 								return (
 									<ul>
-										<li key={comment.comment_id}>
+										<li key={`${comment.comment_id}Username`}>
 											{isUser ? <p>You said: </p> : <p>{user} said: </p>}
 											{comment.body}
 										</li>
@@ -34,8 +34,10 @@ export const UserCommentGenerator = ({
 												{article.title}
 											</Link>
 										</li>
-										<li>Votes: {comment.votes}</li>
-										<li>
+										<li key={`${comment.comment_id}Votes`}>
+											Votes: {comment.votes}
+										</li>
+										<li key={`${comment.comment_id}Interaction`}>
 											{isUser ? (
 												<DeleteComment
 													id={comment.comment_id}
@@ -73,7 +75,9 @@ export const ArticleCommentGenerator = ({ comments, setComments }) => {
 							<li key={`${comment.comment_id}details`}>
 								{comment.author} says: {comment.body}
 							</li>
-							<li key={`${comment.comment_id}votes`}>Votes: {comment.votes}</li>
+							<li key={`${comment.comment_id}votes`}>
+								Votes: {comment.votes === null ? "0" : comment.votes}
+							</li>
 							{comment.author === username ? (
 								<DeleteComment
 									id={comment.comment_id}
@@ -113,7 +117,7 @@ export const AddCommentGenerator = ({ article_id, setComments, comments }) => {
 				<input
 					type="text"
 					id="inputComment"
-					onChange={(e) => {
+					onBlur={(e) => {
 						setNewComment(e.target.value);
 					}}
 				/>

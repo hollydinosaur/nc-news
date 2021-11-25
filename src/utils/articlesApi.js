@@ -3,7 +3,6 @@ import axios from "axios";
 const articlesApi = axios.create({
 	baseURL: "https://nc-news-server-holly.herokuapp.com/api/articles",
 });
-
 export const getAllArticles = () => {
 	return articlesApi
 		.get("/", { sort_by: "topic", order: "ASC" })
@@ -11,7 +10,7 @@ export const getAllArticles = () => {
 			return res.data.articles;
 		})
 		.catch((err) => {
-			console.log(err);
+			console.log(err.msg);
 		});
 };
 
@@ -27,27 +26,42 @@ export const getSingleArticle = (id) => {
 };
 
 export const getComments = (id) => {
-	return articlesApi.get(`/${id}/comments`).then((res) => {
-		return res.data.comments;
-	});
+	return articlesApi
+		.get(`/${id}/comments`)
+		.then((res) => {
+			return res.data.comments;
+		})
+		.catch((err) => {
+			console.log(err);
+		});
 };
 
 export const upVoteArticle = (id) => {
-	return articlesApi.patch(`/${id}`, { inc_votes: 1 }).then((res) => {
-		return res.data;
-	});
+	return articlesApi
+		.patch(`/${id}`, { inc_votes: 1 })
+		.then((res) => {
+			return res.data;
+		})
+		.catch((err) => {
+			console.log(err);
+		});
 };
 export const downVoteArticle = (id) => {
-	return articlesApi.patch(`/${id}`, { inc_votes: -1 }).then((res) => {
-		return res.data;
-	});
+	return articlesApi
+		.patch(`/${id}`, { inc_votes: -1 })
+		.then((res) => {
+			return res.data;
+		})
+		.catch((err) => {
+			console.log(err);
+		});
 };
 
 export const addComment = ({ article_id, username, newComment }) => {
 	return articlesApi
 		.post(`/${article_id}/comments`, { username: username, body: newComment })
 		.then((res) => {
-			return res.data.comment;
+			return res.data;
 		})
 		.then((err) => {
 			console.log(err);

@@ -1,10 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import FilterButtons from "./FilterButtons";
 
-const AllArticles = ({ articles }) => {
+const AllArticles = ({ articles, setCurrentTopic }) => {
 	return (
 		<main>
 			<section className="allArticles">
+				<h3>Choose a topic</h3>
+				<FilterButtons setCurrentTopic={setCurrentTopic} />
 				{articles.map((article) => {
 					return (
 						<ul>

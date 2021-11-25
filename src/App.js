@@ -15,11 +15,20 @@ import { getAllArticles } from "./utils/articlesApi";
 function App() {
 	const [username, setUsername] = useState("");
 	const [articles, setArticles] = useState([]);
+	const [currentTopic, setCurrentTopic] = useState("All");
 	useEffect(() => {
 		getAllArticles().then((articlesfromApi) => {
-			setArticles(articlesfromApi);
+			let copied = [...articlesfromApi];
+			if (currentTopic === "All") {
+				setArticles(articlesfromApi);
+			} else {
+				const filtered = copied.filter((article) => {
+					return article.topic === currentTopic;
+				});
+				return setArticles(filtered);
+			}
 		});
-	}, []);
+	}, [currentTopic]);
 	return (
 		<div className="App">
 			<UserContext.Provider value={{ username, setUsername }}>
@@ -29,7 +38,12 @@ function App() {
 					<Route
 						path="/"
 						element={
-							<AllArticles articles={articles} setArticles={setArticles} />
+							<AllArticles
+								articles={articles}
+								setArticles={setArticles}
+								currentTopic={currentTopic}
+								setCurrentTopic={setCurrentTopic}
+							/>
 						}
 					/>
 					<Route path="/errorpage" element={<ErrorPage />} />

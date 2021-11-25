@@ -10,6 +10,7 @@ const AllUsers = () => {
 			setUsers(usersFromApi);
 		});
 	}, [users]);
+
 	return (
 		<main>
 			<section className="allUsers">
