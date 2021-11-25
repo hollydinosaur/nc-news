@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 const AllArticles = ({ articles }) => {
@@ -10,9 +10,9 @@ const AllArticles = ({ articles }) => {
 						<ul>
 							<li key={`${article.title}Title`}>{article.title}</li>
 							<Link to={`/articles/${article.article_id}`}>
-								<li key="{article.title} link">Click to view</li>
+								<li key={`${article.title} link`}>Click to view</li>
 							</Link>
-							<li key="{article.author} key">
+							<li key={`${article.author} key`}>
 								{`By: `}
 								<Link to={`/users/${article.author}`}>{article.author}</Link>
 							</li>

@@ -12,10 +12,11 @@ export const UserCommentGenerator = ({
 	articles,
 	userComments,
 	setUserComments,
+	isUser,
+	user,
 }) => {
 	return (
 		<section className="singleUserComments">
-			<h2>Your Comments</h2>
 			{userComments.map((comment) => {
 				return (
 					<span>
@@ -23,24 +24,31 @@ export const UserCommentGenerator = ({
 							if (article.article_id === comment.article_id) {
 								return (
 									<ul>
-										<li key={comment.comment_id}>You said: {comment.body}</li>
+										<li key={comment.comment_id}>
+											{isUser ? <p>You said: </p> : <p>{user} said: </p>}
+											{comment.body}
+										</li>
 										<li key={article.article_id}>
 											{`On article: `}
 											<Link to={`/articles/${article.article_id}`}>
 												{article.title}
 											</Link>
 										</li>
+										<li>Votes: {comment.votes}</li>
 										<li>
-											<button
-												key={`${comment.comment_id}Delete`}
-												onClick={() => {
-													deleteComment(comment.comment_id).then(() => {
-														setUserComments(userComments);
-													});
-												}}
-											>
-												Delete this comment
-											</button>
+											{isUser ? (
+												<DeleteComment
+													id={comment.comment_id}
+													userComments={userComments}
+													setUserComments={setUserComments}
+												/>
+											) : (
+												<UpDownVoteGenerator
+													comment_id={comment.comment_id}
+													comments={userComments}
+													setComments={setUserComments}
+												/>
+											)}
 										</li>
 									</ul>
 								);
@@ -53,13 +61,8 @@ export const UserCommentGenerator = ({
 	);
 };
 
-export const ArticleCommentGenerator = ({
-	article,
-	setArticle,
-	comments,
-	setComments,
-	article_id,
-}) => {
+export const ArticleCommentGenerator = ({ comments, setComments }) => {
+	const { username } = useContext(UserContext);
 	return (
 		<main>
 			<section className="articleComment">
@@ -71,26 +74,19 @@ export const ArticleCommentGenerator = ({
 								{comment.author} says: {comment.body}
 							</li>
 							<li key={`${comment.comment_id}votes`}>Votes: {comment.votes}</li>
-							<button
-								key={`${comment.comment_id}UpVoteButton`}
-								onClick={() => {
-									upVoteComment(comment.comment_id).then(() => {
-										setComments(comments);
-									});
-								}}
-							>
-								Upvote!
-							</button>
-							<button
-								key={`${comment.comment_id}DownVoteButton`}
-								onClick={() => {
-									downVoteComment(comment.comment_id).then(() => {
-										setComments(comments);
-									});
-								}}
-							>
-								Downvote!
-							</button>
+							{comment.author === username ? (
+								<DeleteComment
+									id={comment.comment_id}
+									setUserComments={setComments}
+									userComments={comments}
+								/>
+							) : (
+								<UpDownVoteGenerator
+									comment_id={comment.comment_id}
+									setComments={setComments}
+									comments={comments}
+								/>
+							)}
 						</ul>
 					);
 				})}
@@ -107,7 +103,7 @@ export const AddCommentGenerator = ({ article_id, setComments, comments }) => {
 			<form
 				onSubmit={(e) => {
 					e.preventDefault();
-					addComment(article_id, username, newComment).then(() => {
+					addComment({ article_id, username, newComment }).then(() => {
 						setComments(comments);
 					});
 				}}
@@ -124,5 +120,48 @@ export const AddCommentGenerator = ({ article_id, setComments, comments }) => {
 				<input type="submit" value="submit" />
 			</form>
 		</section>
+	);
+};
+
+export const UpDownVoteGenerator = ({ comment_id, setComments, comments }) => {
+	return (
+		<div>
+			<button
+				key={`${comment_id}UpVoteButton`}
+				onClick={() => {
+					upVoteComment(comment_id).then(() => {
+						setComments(comments);
+					});
+				}}
+			>
+				Upvote!
+			</button>
+			<button
+				key={`${comment_id}DownVoteButton`}
+				onClick={() => {
+					downVoteComment(comment_id).then(() => {
+						setComments(comments);
+					});
+				}}
+			>
+				Downvote!
+			</button>
+		</div>
+	);
+};
+export const DeleteComment = ({ id, setUserComments, userComments }) => {
+	return (
+		<div>
+			<button
+				key={`${id}Delete`}
+				onClick={() => {
+					deleteComment(id).then(() => {
+						setUserComments(userComments);
+					});
+				}}
+			>
+				Delete this comment
+			</button>
+		</div>
 	);
 };

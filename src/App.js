@@ -8,7 +8,6 @@ import ErrorPage from "./components/ErrorPage";
 import SingleArticle from "./components/SingleArticle";
 import AllUsers from "./components/AllUsers";
 import LogInPage from "./components/LogInPage";
-import UserPage from "./components/UserPage";
 import UserContext from "./contexts/UserContext";
 import SingleUser from "./components/SingleUser";
 import { getAllArticles } from "./utils/articlesApi";
@@ -25,7 +24,7 @@ function App() {
 		<div className="App">
 			<UserContext.Provider value={{ username, setUsername }}>
 				<Header />
-				<NavBar username={username} />
+				<NavBar />
 				<Routes>
 					<Route
 						path="/"
@@ -37,7 +36,6 @@ function App() {
 					<Route path="/articles/:article_id" element={<SingleArticle />} />
 					<Route path="/users/allusers" element={<AllUsers />} />
 					<Route path="/users/login" element={<LogInPage />} />
-					<Route path={`/users/${username}`} element={<UserPage />} />
 					<Route
 						path={`/users/:user`}
 						element={<SingleUser articles={articles} />}

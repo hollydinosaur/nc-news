@@ -8,6 +8,9 @@ const SingleUser = ({ articles }) => {
 	const [userpage, setUserpage] = useState({});
 	const [userComments, setUserComments] = useState([]);
 	const { username } = useContext(UserContext);
+	let isUser = false;
+	if (user === username) isUser = true;
+
 	useEffect(() => {
 		getUserByUsername(user).then((userFromApi) => {
 			setUserpage(userFromApi);
@@ -17,7 +20,8 @@ const SingleUser = ({ articles }) => {
 		getCommentsByUser(user).then((commentsFromApi) => {
 			setUserComments(commentsFromApi);
 		});
-	}, [user]);
+	}, [user, userComments]);
+
 	if (userpage === undefined) return <p>This user does not exist!</p>;
 	return (
 		<main>
@@ -25,10 +29,17 @@ const SingleUser = ({ articles }) => {
 				<h2>{`${userpage.username}`}</h2>
 				<img src={userpage.avatar_url} alt={userpage.username} />
 				<p>Name: {userpage.name}</p>
+				{isUser ? (
+					<h2>Your Comments</h2>
+				) : (
+					<h2>{`${userpage.username}'s comments`} </h2>
+				)}
 				<UserCommentGenerator
 					articles={articles}
 					userComments={userComments}
 					setUserComments={setUserComments}
+					isUser={isUser}
+					user={user}
 				/>
 			</section>
 		</main>

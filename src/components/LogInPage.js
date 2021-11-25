@@ -30,7 +30,7 @@ const LogInPage = () => {
 					<label htmlFor="inputUsername">Type Your Username</label>
 					<input
 						type="text"
-						onChange={(e) => {
+						onBlur={(e) => {
 							setUsername(e.target.value);
 						}}
 					/>

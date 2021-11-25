@@ -4,11 +4,14 @@ import { getSingleArticle, getComments } from "../utils/articlesApi";
 import { AddCommentGenerator, ArticleCommentGenerator } from "./Comments";
 import { upVoteArticle, downVoteArticle } from "../utils/articlesApi";
 import UserContext from "../contexts/UserContext";
+import { Link } from "react-router-dom";
+
 const SingleArticle = () => {
 	const { article_id } = useParams();
-	const { username } = useContext(UserContext);
 	const [article, setArticle] = useState({});
 	const [comments, setComments] = useState([]);
+	const { username } = useContext(UserContext);
+
 	useEffect(() => {
 		getSingleArticle(article_id).then((articleFromApi) => {
 			setArticle(articleFromApi);
@@ -26,36 +29,54 @@ const SingleArticle = () => {
 			<section className="singleArticle">
 				<h2>{article.title}</h2>
 				<h3>
-					By: {article.author} At: {article.created_at}
+					By:{" "}
+					{article.author === username ? (
+						"You"
+					) : (
+						<Link to={`/users/${article.author}`}>{article.author}</Link>
+					)}{" "}
+					At: {article.created_at}
 				</h3>
 				<h3>Votes: {article.votes}</h3>
 				<p key={`${article.article_id}Body`}>{article.body}</p>
-				<button
-					key={`${article.article_id}UpVote`}
-					onClick={() => {
-						upVoteArticle(article_id).then(() => {
-							setArticle(article);
-						});
-					}}
-				>
-					Upvote!
-				</button>
-				<button
-					key={`${article.article_id}DownVote`}
-					onClick={() => {
-						downVoteArticle(article_id).then(() => {
-							setArticle(article);
-						});
-					}}
-				>
-					Downvote!
-				</button>
+				{article.author === username ? (
+					""
+				) : (
+					<div>
+						<button
+							key={`${article.article_id}UpVote`}
+							onClick={() => {
+								upVoteArticle(article_id).then(() => {
+									setArticle(article);
+								});
+							}}
+						>
+							Upvote!
+						</button>
+						<button
+							key={`${article.article_id}DownVote`}
+							onClick={() => {
+								downVoteArticle(article_id).then(() => {
+									setArticle(article);
+								});
+							}}
+						>
+							Downvote!
+						</button>
+					</div>
+				)}
 			</section>{" "}
-			<AddCommentGenerator
-				article_id={article_id}
-				setComments={setComments}
-				comments={comments}
-			/>
+			{username === "" ? (
+				<Link to="/users/login">
+					<p>Log in to comment on this article!</p>
+				</Link>
+			) : (
+				<AddCommentGenerator
+					article_id={article_id}
+					setComments={setComments}
+					comments={comments}
+				/>
+			)}
 			<ArticleCommentGenerator
 				article={article}
 				setArticle={setArticle}

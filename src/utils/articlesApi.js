@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const articlesApi = axios.create({
-	baseURL: "https://nc-news-server-holly.herokuapp.com/api/articles/",
+	baseURL: "https://nc-news-server-holly.herokuapp.com/api/articles",
 });
 
 export const getAllArticles = () => {
@@ -11,7 +11,6 @@ export const getAllArticles = () => {
 			return res.data.articles;
 		})
 		.catch((err) => {
-			window.location.replace("/errorpage");
 			console.log(err);
 		});
 };
@@ -23,7 +22,6 @@ export const getSingleArticle = (id) => {
 			return res.data.article;
 		})
 		.catch((err) => {
-			window.location.replace("/errorpage");
 			console.log(err);
 		});
 };
@@ -45,13 +43,11 @@ export const downVoteArticle = (id) => {
 	});
 };
 
-export const addComment = ({ article_id, username, body }) => {
-	console.log(username);
+export const addComment = ({ article_id, username, newComment }) => {
 	return articlesApi
-		.post(`/${article_id}`, { username: username, body: body })
+		.post(`/${article_id}/comments`, { username: username, body: newComment })
 		.then((res) => {
-			console.log(res.data);
-			return res.data;
+			return res.data.comment;
 		})
 		.then((err) => {
 			console.log(err);
