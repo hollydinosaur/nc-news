@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import { useContext } from "react";
+import { getAllTopics } from "../utils/topicsApi";
+
 const NavBar = () => {
+	const [topics, setTopics] = useState([]);
+	useEffect(() => {
+		getAllTopics().then((topicsFromApi) => {
+			setTopics(topicsFromApi);
+		});
+	}, [topics]);
 	const { username } = useContext(UserContext);
 	let link = "/users/login";
 	let text = "Log In";
@@ -24,6 +32,19 @@ const NavBar = () => {
 				<Link to={link}>
 					<span className="navButton"> {text}</span>
 				</Link>
+				<p>
+					View Articles about: {`      `}
+					{topics.map((topic) => {
+						return (
+							<span className="topicLinks">
+								<Link to={`/articles/${topic.slug}/all`}>
+									{topic.slug}
+									{`   |   `}
+								</Link>
+							</span>
+						);
+					})}
+				</p>
 			</section>
 		</main>
 	);

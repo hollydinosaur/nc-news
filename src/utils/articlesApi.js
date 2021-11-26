@@ -3,7 +3,7 @@ import axios from "axios";
 const articlesApi = axios.create({
 	baseURL: "https://nc-news-server-holly.herokuapp.com/api/articles",
 });
-export const getAllArticles = ({ sortBy = "ASC", order = "topic" }) => {
+export const getAllArticles = ({ sortBy, order }) => {
 	return articlesApi
 		.get(`/?sort_by=${sortBy}&&order=${order}`)
 		.then((res) => {
@@ -11,6 +11,21 @@ export const getAllArticles = ({ sortBy = "ASC", order = "topic" }) => {
 		})
 		.catch((err) => {
 			console.log(err.msg);
+		});
+};
+
+export const getArticlesByTopic = ({
+	sortBy = "ASC",
+	order = "topic",
+	topic,
+}) => {
+	return articlesApi
+		.get(`/?topic=${topic}`)
+		.then((res) => {
+			return res.data.articles;
+		})
+		.catch((err) => {
+			console.log(err);
 		});
 };
 

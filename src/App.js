@@ -4,12 +4,12 @@ import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
 import NavBar from "./components/NavBar";
 import AllArticles from "./components/AllArticles";
-import ErrorPage from "./components/ErrorPage";
 import SingleArticle from "./components/SingleArticle";
 import AllUsers from "./components/AllUsers";
 import LogInPage from "./components/LogInPage";
 import UserContext from "./contexts/UserContext";
 import SingleUser from "./components/SingleUser";
+import ArticleByTopic from "./components/ArticleByTopic";
 import { getAllArticles } from "./utils/articlesApi";
 
 function App() {
@@ -39,7 +39,6 @@ function App() {
 							/>
 						}
 					/>
-					<Route path="/errorpage" element={<ErrorPage />} />
 					<Route path="/articles/:article_id" element={<SingleArticle />} />
 					<Route path="/users/allusers" element={<AllUsers />} />
 					<Route path="/users/login" element={<LogInPage />} />
@@ -47,6 +46,7 @@ function App() {
 						path={`/users/:user`}
 						element={<SingleUser articles={articles} />}
 					/>
+					<Route path="/articles/:topic/all" element={<ArticleByTopic />} />
 				</Routes>
 			</UserContext.Provider>
 		</div>

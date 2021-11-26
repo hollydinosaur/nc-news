@@ -2,15 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import FilterButtons from "./FilterButtons";
 
-const AllArticles = ({ articles, setCurrentTopic, setOrder, setSortBy }) => {
+const AllArticles = ({ articles, setOrder, setSortBy }) => {
 	return (
 		<main>
 			<section className="allArticles">
-				<FilterButtons
-					setCurrentTopic={setCurrentTopic}
-					setOrder={setOrder}
-					setSortBy={setSortBy}
-				/>
+				<FilterButtons setOrder={setOrder} setSortBy={setSortBy} />
 				{articles.map((article) => {
 					return (
 						<ul>

@@ -16,7 +16,7 @@ img {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
-	border: solid orange;
+	border: solid #f9d18b;
 	border-radius: 10%;
 }
 
@@ -39,6 +39,12 @@ h2 {
 }
 .NavBar {
 	border-bottom: #f9d18b solid;
+}
+
+.topicLinks {
+	font-family: "BenchNine", sans-serif;
+	color: rgb(37, 150, 190);
+	font-size: 20px;
 }
 
 li {

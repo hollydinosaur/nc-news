@@ -21,40 +21,38 @@ export const UserCommentGenerator = ({
 				return (
 					<span>
 						{articles.map((article) => {
-							if (article.article_id === comment.article_id) {
-								return (
-									<ul>
-										<li key={`${comment.comment_id}Username`}>
-											{isUser ? <p>You said: </p> : <p>{user} said: </p>}
-											{comment.body}
-										</li>
-										<li key={article.article_id}>
-											{`On article: `}
-											<Link to={`/articles/${article.article_id}`}>
-												{article.title}
-											</Link>
-										</li>
-										<li key={`${comment.comment_id}Votes`}>
-											Votes: {comment.votes}
-										</li>
-										<li key={`${comment.comment_id}Interaction`}>
-											{isUser ? (
-												<DeleteComment
-													id={comment.comment_id}
-													userComments={userComments}
-													setUserComments={setUserComments}
-												/>
-											) : (
-												<UpDownVoteGenerator
-													comment_id={comment.comment_id}
-													comments={userComments}
-													setComments={setUserComments}
-												/>
-											)}
-										</li>
-									</ul>
-								);
-							} else return "No Comments";
+							return (
+								<ul>
+									<li key={`${comment.comment_id}Username`}>
+										{isUser ? <p>You said: </p> : <p>{user} said: </p>}
+										{comment.body}
+									</li>
+									<li key={article.article_id}>
+										{`On article: `}
+										<Link to={`/articles/${article.article_id}`}>
+											{article.title}
+										</Link>
+									</li>
+									<li key={`${comment.comment_id}Votes`}>
+										Votes: {comment.votes}
+									</li>
+									<li key={`${comment.comment_id}Interaction`}>
+										{isUser ? (
+											<DeleteComment
+												id={comment.comment_id}
+												userComments={userComments}
+												setUserComments={setUserComments}
+											/>
+										) : (
+											<UpDownVoteGenerator
+												comment_id={comment.comment_id}
+												comments={userComments}
+												setComments={setUserComments}
+											/>
+										)}
+									</li>
+								</ul>
+							);
 						})}
 					</span>
 				);
