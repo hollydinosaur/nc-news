@@ -26,7 +26,7 @@ const SingleUser = ({ articles }) => {
 	return (
 		<main>
 			<section className="singleUserPage">
-				<h2>{`${userpage.username}`}</h2>
+				<h2>{isUser ? `Hello ${username}` : `${userpage.username}`}</h2>
 				<img src={userpage.avatar_url} alt={userpage.username} />
 				<p>Name: {userpage.name}</p>
 				{isUser ? (

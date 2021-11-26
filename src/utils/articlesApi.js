@@ -3,9 +3,13 @@ import axios from "axios";
 const articlesApi = axios.create({
 	baseURL: "https://nc-news-server-holly.herokuapp.com/api/articles",
 });
-export const getAllArticles = () => {
+export const getAllArticles = ({
+	sortBy = "ASC",
+	order = "topic",
+	currentTopic,
+}) => {
 	return articlesApi
-		.get("/", { sort_by: "topic", order: "ASC" })
+		.get(`/?sort_by=${sortBy}&&order=${order}&&topic=${currentTopic}`)
 		.then((res) => {
 			return res.data.articles;
 		})
