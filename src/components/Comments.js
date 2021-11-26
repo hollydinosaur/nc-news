@@ -54,7 +54,7 @@ export const UserCommentGenerator = ({
 										</li>
 									</ul>
 								);
-							}
+							} else return "No Comments";
 						})}
 					</span>
 				);

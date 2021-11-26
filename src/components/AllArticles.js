@@ -6,7 +6,6 @@ const AllArticles = ({ articles, setCurrentTopic, setOrder, setSortBy }) => {
 	return (
 		<main>
 			<section className="allArticles">
-				<h3>Choose a topic</h3>
 				<FilterButtons
 					setCurrentTopic={setCurrentTopic}
 					setOrder={setOrder}
@@ -15,7 +14,9 @@ const AllArticles = ({ articles, setCurrentTopic, setOrder, setSortBy }) => {
 				{articles.map((article) => {
 					return (
 						<ul>
-							<li key={`${article.title}Title`}>{article.title}</li>
+							<li className="Titles" key={`${article.title}Title`}>
+								{article.title}
+							</li>
 							<Link to={`/articles/${article.article_id}`}>
 								<li key={`${article.title} link`}>Click to view</li>
 							</Link>

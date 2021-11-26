@@ -1,3 +1,50 @@
 .App {
 	text-align: center;
 }
+@import url("https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=BenchNine:wght@300&display=swap");
+
+* {
+	text-align: center;
+	color: black;
+	font-family: Helvetica;
+	color: #063970;
+}
+img {
+	height: 200px;
+	width: 200px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	border: solid orange;
+	border-radius: 10%;
+}
+
+h1 {
+	font-family: "Luckiest Guy", cursive;
+	font-size: 65px;
+	color: rgb(37, 150, 190);
+}
+
+h2 {
+	font-family: "Luckiest Guy", cursive;
+	font-size: 40px;
+	color: #063970;
+}
+
+.navButton {
+	font-family: "BenchNine", sans-serif;
+	color: rgb(37, 150, 190);
+	font-size: 40px;
+}
+.NavBar {
+	border-bottom: #f9d18b solid;
+}
+
+li {
+	list-style-type: none;
+}
+
+.Titles {
+	font-size: 30px;
+}

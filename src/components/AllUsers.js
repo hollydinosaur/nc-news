@@ -19,14 +19,18 @@ const AllUsers = () => {
 					return (
 						<ul>
 							<Link to={`/users/${user.username}`}>
-								<li key={`${user.username}`}>Username: {user.username}</li>
+								<li key={`${user.username}`}>
+									<h3>{user.username}</h3>
+								</li>
 							</Link>
 							<li key={`${user.username}Name`}>Name: {user.name}</li>
-							<img
-								src={user.avatar_url}
-								alt={user.username}
-								key={`${user.username}Img`}
-							/>
+							<div className="imgDiv">
+								<img
+									src={user.avatar_url}
+									alt={user.username}
+									key={`${user.username}Img`}
+								/>{" "}
+							</div>
 						</ul>
 					);
 				})}

@@ -15,22 +15,13 @@ import { getAllArticles } from "./utils/articlesApi";
 function App() {
 	const [username, setUsername] = useState("");
 	const [articles, setArticles] = useState([]);
-	const [currentTopic, setCurrentTopic] = useState("All");
 	const [order, setOrder] = useState("ASC");
 	const [sortBy, setSortBy] = useState("topic");
 	useEffect(() => {
 		getAllArticles({ sortBy, order }).then((articlesfromApi) => {
-			let copied = [...articlesfromApi];
-			if (currentTopic === "All") {
-				setArticles(articlesfromApi);
-			} else {
-				const filtered = copied.filter((article) => {
-					return article.topic === currentTopic;
-				});
-				return setArticles(filtered);
-			}
+			return setArticles(articlesfromApi);
 		});
-	}, [currentTopic, order, sortBy]);
+	}, [order, sortBy]);
 	return (
 		<div className="App">
 			<UserContext.Provider value={{ username, setUsername }}>
@@ -43,8 +34,6 @@ function App() {
 							<AllArticles
 								articles={articles}
 								setArticles={setArticles}
-								currentTopic={currentTopic}
-								setCurrentTopic={setCurrentTopic}
 								setOrder={setOrder}
 								setSortBy={setSortBy}
 							/>

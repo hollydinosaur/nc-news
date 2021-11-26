@@ -14,13 +14,15 @@ const NavBar = () => {
 		<main>
 			<section className="NavBar">
 				<Link to="/">
-					<span>All Articles</span>
+					<span className="navButton"> All Articles</span>
 				</Link>
+				{`   |   `}
 				<Link to="/users/allusers">
-					<span>View All Users</span>
+					<span className="navButton"> View All Users</span>
 				</Link>
+				{`   |   `}
 				<Link to={link}>
-					<span>{text}</span>
+					<span className="navButton"> {text}</span>
 				</Link>
 			</section>
 		</main>

@@ -1,13 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { getAllTopics } from "../utils/topicsApi";
-
-const FilterButtons = ({ setCurrentTopic, setOrder, setSortBy }) => {
-	const [topics, setTopics] = useState([]);
-	useEffect(() => {
-		getAllTopics().then((topicsFromApi) => {
-			setTopics(topicsFromApi);
-		});
-	}, []);
+import React from "react";
+const FilterButtons = ({ setOrder, setSortBy }) => {
 	return (
 		<section className="filterButtons">
 			<p>
