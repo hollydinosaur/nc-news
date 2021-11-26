@@ -36,12 +36,13 @@ const NavBar = () => {
 					View Articles about: {`      `}
 					{topics.map((topic) => {
 						return (
-							<span className="topicLinks">
-								<Link to={`/articles/${topic.slug}/all`}>
-									{topic.slug}
-									{`   |   `}
-								</Link>
-							</span>
+							<Link
+								to={`/articles/${topic.slug}/all`}
+								key={`${topic.slug}Link`}
+							>
+								{topic.slug}
+								{`   |   `}
+							</Link>
 						);
 					})}
 				</p>

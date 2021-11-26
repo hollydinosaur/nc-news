@@ -4,11 +4,12 @@ import { getCommentsByUser, getUserByUsername } from "../utils/usersApi";
 import UserContext from "../contexts/UserContext";
 import { UserCommentGenerator } from "./Comments";
 import { useNavigate } from "react-router";
+
 const SingleUser = ({ articles }) => {
 	const { user } = useParams();
 	const [userpage, setUserpage] = useState({});
 	const [userComments, setUserComments] = useState([]);
-	const { username } = useContext(UserContext);
+	const { username, setUsername } = useContext(UserContext);
 	const navigate = useNavigate();
 	let isUser = false;
 	if (user === username) isUser = true;
@@ -37,6 +38,25 @@ const SingleUser = ({ articles }) => {
 		<main>
 			<section className="singleUserPage">
 				<h2>{isUser ? `Hello ${username}` : `${userpage.username}`}</h2>
+				<p>
+					{isUser ? (
+						<button
+							onClick={() => {
+								setUsername("");
+							}}
+						>
+							Log Out!
+						</button>
+					) : (
+						<button
+							onClick={() => {
+								navigate("/users/login");
+							}}
+						>
+							Log In!
+						</button>
+					)}
+				</p>
 				<img src={userpage.avatar_url} alt={userpage.username} />
 				<p>Name: {userpage.name}</p>
 				{isUser ? (

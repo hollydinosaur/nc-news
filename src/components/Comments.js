@@ -7,6 +7,7 @@ import {
 } from "../utils/commentsApi";
 import { addComment } from "../utils/articlesApi";
 import UserContext from "../contexts/UserContext";
+import { upVoteArticle, downVoteArticle } from "../utils/articlesApi";
 
 export const UserCommentGenerator = ({
 	articles,
@@ -27,9 +28,12 @@ export const UserCommentGenerator = ({
 										{isUser ? <p>You said: </p> : <p>{user} said: </p>}
 										{comment.body}
 									</li>
-									<li key={article.article_id}>
+									<li key={`${comment.comment_id}Article`}>
 										{`On article: `}
-										<Link to={`/articles/${article.article_id}`}>
+										<Link
+											to={`/articles/${article.article_id}`}
+											key={article.article_id}
+										>
 											{article.title}
 										</Link>
 									</li>
@@ -69,26 +73,28 @@ export const ArticleCommentGenerator = ({ comments, setComments }) => {
 				<h2>All Comments</h2>
 				{comments.map((comment) => {
 					return (
-						<ul>
-							<li key={`${comment.comment_id}details`}>
+						<ul key={`${comment.comment_id}Details`}>
+							<li key={`${comment.comment_id}body`}>
 								{comment.author} says: {comment.body}
 							</li>
 							<li key={`${comment.comment_id}votes`}>
 								Votes: {comment.votes === null ? "0" : comment.votes}
 							</li>
-							{comment.author === username ? (
-								<DeleteComment
-									id={comment.comment_id}
-									setUserComments={setComments}
-									userComments={comments}
-								/>
-							) : (
-								<UpDownVoteGenerator
-									comment_id={comment.comment_id}
-									setComments={setComments}
-									comments={comments}
-								/>
-							)}
+							<li key={`${comment.comment_id}Interaction`}>
+								{comment.author === username ? (
+									<DeleteComment
+										id={comment.comment_id}
+										setUserComments={setComments}
+										userComments={comments}
+									/>
+								) : (
+									<UpDownVoteGenerator
+										comment_id={comment.comment_id}
+										setComments={setComments}
+										comments={comments}
+									/>
+								)}
+							</li>
 						</ul>
 					);
 				})}
@@ -177,6 +183,53 @@ export const DeleteComment = ({ id, setUserComments, userComments }) => {
 			>
 				Delete this comment
 			</button>
+		</div>
+	);
+};
+
+export const ArticleUpDownVoteGenerator = ({
+	article_id,
+	setVotes,
+	setArticle,
+	article,
+}) => {
+	const [clicked, setClicked] = useState(false);
+	const [err, setErr] = useState("");
+	return (
+		<div>
+			<button
+				key={`${article.article_id}UpVote`}
+				onClick={() => {
+					upVoteArticle(article_id).then(() => {
+						if (clicked === false) {
+							setClicked(true);
+							setVotes((prevVotes) => prevVotes + 1);
+							setArticle(article);
+						} else {
+							setErr("You can only vote once!");
+						}
+					});
+				}}
+			>
+				Upvote!
+			</button>
+			<button
+				key={`${article.article_id}DownVote`}
+				onClick={() => {
+					if (clicked === false) {
+						downVoteArticle(article_id).then(() => {
+							setClicked(true);
+							setVotes((prevVotes) => prevVotes - 1);
+							setArticle(article);
+						});
+					} else {
+						setErr("You can only vote once!");
+					}
+				}}
+			>
+				Downvote!
+			</button>
+			<p>{err}</p>
 		</div>
 	);
 };

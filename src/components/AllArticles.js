@@ -9,7 +9,7 @@ const AllArticles = ({ articles, setOrder, setSortBy }) => {
 				<FilterButtons setOrder={setOrder} setSortBy={setSortBy} />
 				{articles.map((article) => {
 					return (
-						<ul>
+						<ul key={`${article.article_id}Details`}>
 							<li className="Titles" key={`${article.title}Title`}>
 								{article.title}
 							</li>

@@ -23,7 +23,6 @@ const LogInPage = () => {
 								setIsUser(false);
 								setIsLoading(false);
 							} else {
-								setUsername(username);
 								setIsUser(true);
 								setIsLoading(false);
 								navigate(`/users/${username}`);
@@ -34,7 +33,7 @@ const LogInPage = () => {
 					<label htmlFor="inputUsername">Type Your Username</label>
 					<input
 						type="text"
-						onBlur={(e) => {
+						onChange={(e) => {
 							setUsername(e.target.value);
 						}}
 					/>

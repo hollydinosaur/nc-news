@@ -14,13 +14,9 @@ export const getAllArticles = ({ sortBy, order }) => {
 		});
 };
 
-export const getArticlesByTopic = ({
-	sortBy = "ASC",
-	order = "topic",
-	topic,
-}) => {
+export const getArticlesByTopic = ({ sortBy, order, topic }) => {
 	return articlesApi
-		.get(`/?topic=${topic}`)
+		.get(`/?sort_by=${sortBy}&&order=${order}&&topic=${topic}`)
 		.then((res) => {
 			return res.data.articles;
 		})

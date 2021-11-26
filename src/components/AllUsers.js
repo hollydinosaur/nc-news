@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { getAllUsers } from "../utils/usersApi";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 const AllUsers = () => {
 	const [users, setUsers] = useState([]);
-
+	const navigate = useNavigate();
 	useEffect(() => {
-		getAllUsers().then((usersFromApi) => {
-			setUsers(usersFromApi);
-		});
-	}, [users]);
+		getAllUsers()
+			.then((usersFromApi) => {
+				setUsers(usersFromApi);
+			})
+			.catch((err) => {
+				navigate("/errorpage");
+			});
+	}, [navigate]);
 
 	return (
 		<main>

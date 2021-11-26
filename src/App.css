@@ -9,6 +9,7 @@
 	color: black;
 	font-family: Helvetica;
 	color: #063970;
+	align-items: center;
 }
 img {
 	height: 200px;
@@ -33,7 +34,6 @@ h2 {
 }
 
 .navButton {
-	font-family: "BenchNine", sans-serif;
 	color: rgb(37, 150, 190);
 	font-size: 40px;
 }
@@ -42,7 +42,6 @@ h2 {
 }
 
 .topicLinks {
-	font-family: "BenchNine", sans-serif;
 	color: rgb(37, 150, 190);
 	font-size: 20px;
 }

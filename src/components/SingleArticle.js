@@ -2,14 +2,15 @@ import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router";
 import { getSingleArticle, getComments } from "../utils/articlesApi";
 import { AddCommentGenerator, ArticleCommentGenerator } from "./Comments";
-import { upVoteArticle, downVoteArticle } from "../utils/articlesApi";
 import UserContext from "../contexts/UserContext";
 import { Link, useNavigate } from "react-router-dom";
+import { ArticleUpDownVoteGenerator } from "./Comments";
 
 const SingleArticle = () => {
 	const { article_id } = useParams();
 	const [article, setArticle] = useState({});
 	const [comments, setComments] = useState([]);
+	const [votes, setVotes] = useState([]);
 	const { username } = useContext(UserContext);
 	const navigate = useNavigate();
 
@@ -17,11 +18,12 @@ const SingleArticle = () => {
 		getSingleArticle(article_id)
 			.then((articleFromApi) => {
 				setArticle(articleFromApi);
+				setVotes(articleFromApi.votes);
 			})
 			.catch((err) => {
 				navigate("/errorpage");
 			});
-	}, [article_id, article, navigate]);
+	}, [article_id, votes, navigate]);
 
 	useEffect(() => {
 		getComments(article_id)
@@ -31,7 +33,7 @@ const SingleArticle = () => {
 			.catch((err) => {
 				navigate("/errorpage");
 			});
-	}, [article_id, comments, navigate]);
+	}, [article_id, navigate]);
 
 	return (
 		<main>
@@ -46,33 +48,17 @@ const SingleArticle = () => {
 					)}{" "}
 					At: {article.created_at}
 				</h3>
-				<h3>Votes: {article.votes}</h3>
+				<h3>Votes: {votes}</h3>
 				<p key={`${article.article_id}Body`}>{article.body}</p>
 				{article.author === username ? (
 					""
 				) : (
-					<div>
-						<button
-							key={`${article.article_id}UpVote`}
-							onClick={() => {
-								upVoteArticle(article_id).then(() => {
-									setArticle(article);
-								});
-							}}
-						>
-							Upvote!
-						</button>
-						<button
-							key={`${article.article_id}DownVote`}
-							onClick={() => {
-								downVoteArticle(article_id).then(() => {
-									setArticle(article);
-								});
-							}}
-						>
-							Downvote!
-						</button>
-					</div>
+					<ArticleUpDownVoteGenerator
+						article_id={article.article_id}
+						setVotes={setVotes}
+						setArticle={setArticle}
+						article={article}
+					/>
 				)}
 			</section>{" "}
 			{username === "" ? (
