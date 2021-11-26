@@ -5,9 +5,14 @@ const usersApi = axios.create({
 });
 
 export const getAllUsers = () => {
-	return usersApi.get("/").then((res) => {
-		return res.data.users;
-	});
+	return usersApi
+		.get("/")
+		.then((res) => {
+			return res.data.users;
+		})
+		.catch((err) => {
+			return err;
+		});
 };
 
 export const getUserByUsername = (username) => {
@@ -17,7 +22,7 @@ export const getUserByUsername = (username) => {
 			return res.data.user;
 		})
 		.catch((err) => {
-			console.log(err);
+			return err;
 		});
 };
 
@@ -28,6 +33,6 @@ export const getCommentsByUser = (username) => {
 			return res.data.comments;
 		})
 		.catch((err) => {
-			console.log(err);
+			return err;
 		});
 };

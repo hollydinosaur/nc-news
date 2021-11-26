@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
 import NavBar from "./components/NavBar";
@@ -10,6 +10,7 @@ import LogInPage from "./components/LogInPage";
 import UserContext from "./contexts/UserContext";
 import SingleUser from "./components/SingleUser";
 import ArticleByTopic from "./components/ArticleByTopic";
+import ErrorPage from "./components/ErrorPage";
 import { getAllArticles } from "./utils/articlesApi";
 
 function App() {
@@ -17,11 +18,16 @@ function App() {
 	const [articles, setArticles] = useState([]);
 	const [order, setOrder] = useState("ASC");
 	const [sortBy, setSortBy] = useState("topic");
+	const navigate = useNavigate();
 	useEffect(() => {
-		getAllArticles({ sortBy, order }).then((articlesfromApi) => {
-			return setArticles(articlesfromApi);
-		});
-	}, [order, sortBy]);
+		getAllArticles({ sortBy, order })
+			.then((articlesfromApi) => {
+				return setArticles(articlesfromApi);
+			})
+			.catch((err) => {
+				navigate("/errorpage");
+			});
+	}, [order, sortBy, navigate]);
 	return (
 		<div className="App">
 			<UserContext.Provider value={{ username, setUsername }}>
@@ -47,6 +53,7 @@ function App() {
 						element={<SingleUser articles={articles} />}
 					/>
 					<Route path="/articles/:topic/all" element={<ArticleByTopic />} />
+					<Route path="/errorpage" element={<ErrorPage />} />
 				</Routes>
 			</UserContext.Provider>
 		</div>

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { getArticlesByTopic } from "../utils/articlesApi";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import FilterButtons from "./FilterButtons";
 
 const ArticleByTopic = () => {
 	const { topic } = useParams();

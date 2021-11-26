@@ -10,7 +10,7 @@ export const getAllArticles = ({ sortBy, order }) => {
 			return res.data.articles;
 		})
 		.catch((err) => {
-			console.log(err.msg);
+			return err;
 		});
 };
 
@@ -25,7 +25,7 @@ export const getArticlesByTopic = ({
 			return res.data.articles;
 		})
 		.catch((err) => {
-			console.log(err);
+			return err;
 		});
 };
 
@@ -36,7 +36,7 @@ export const getSingleArticle = (id) => {
 			return res.data.article;
 		})
 		.catch((err) => {
-			console.log(err);
+			return err;
 		});
 };
 
@@ -47,7 +47,7 @@ export const getComments = (id) => {
 			return res.data.comments;
 		})
 		.catch((err) => {
-			console.log(err);
+			return err;
 		});
 };
 
@@ -58,7 +58,7 @@ export const upVoteArticle = (id) => {
 			return res.data;
 		})
 		.catch((err) => {
-			console.log(err);
+			return err;
 		});
 };
 export const downVoteArticle = (id) => {
@@ -68,7 +68,7 @@ export const downVoteArticle = (id) => {
 			return res.data;
 		})
 		.catch((err) => {
-			console.log(err);
+			return err;
 		});
 };
 
@@ -79,6 +79,6 @@ export const addComment = ({ article_id, username, newComment }) => {
 			return res.data;
 		})
 		.then((err) => {
-			console.log(err);
+			return err;
 		});
 };

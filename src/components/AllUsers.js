@@ -17,7 +17,7 @@ const AllUsers = () => {
 				<h2>All Users</h2>
 				{users.map((user) => {
 					return (
-						<ul>
+						<ul key={`${user.username}Details`}>
 							<Link to={`/users/${user.username}`}>
 								<li key={`${user.username}`}>
 									<h3>{user.username}</h3>

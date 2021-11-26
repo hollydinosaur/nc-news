@@ -3,26 +3,36 @@ import { useParams } from "react-router";
 import { getCommentsByUser, getUserByUsername } from "../utils/usersApi";
 import UserContext from "../contexts/UserContext";
 import { UserCommentGenerator } from "./Comments";
+import { useNavigate } from "react-router";
 const SingleUser = ({ articles }) => {
 	const { user } = useParams();
 	const [userpage, setUserpage] = useState({});
 	const [userComments, setUserComments] = useState([]);
 	const { username } = useContext(UserContext);
+	const navigate = useNavigate();
 	let isUser = false;
 	if (user === username) isUser = true;
 
 	useEffect(() => {
-		getUserByUsername(user).then((userFromApi) => {
-			setUserpage(userFromApi);
-		});
-	}, [user]);
+		getUserByUsername(user)
+			.then((userFromApi) => {
+				if (userFromApi.username === undefined) navigate("/errorpage");
+				setUserpage(userFromApi);
+			})
+			.catch((err) => {
+				if (err.status === 404) {
+					navigate("/errorpage");
+				}
+			});
+	}, [user, navigate]);
 	useEffect(() => {
-		getCommentsByUser(user).then((commentsFromApi) => {
-			setUserComments(commentsFromApi);
-		});
-	}, [user, userComments]);
+		getCommentsByUser(user)
+			.then((commentsFromApi) => {
+				setUserComments(commentsFromApi);
+			})
+			.catch((err) => {});
+	}, [user, userComments, navigate]);
 
-	if (userpage === undefined) return <p>This user does not exist!</p>;
 	return (
 		<main>
 			<section className="singleUserPage">

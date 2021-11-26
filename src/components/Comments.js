@@ -126,14 +126,21 @@ export const AddCommentGenerator = ({ article_id, setComments, comments }) => {
 };
 
 export const UpDownVoteGenerator = ({ comment_id, setComments, comments }) => {
+	const [clicked, setClicked] = useState(false);
+	const [err, setErr] = useState("");
 	return (
 		<div>
 			<button
 				key={`${comment_id}UpVoteButton`}
 				onClick={() => {
-					upVoteComment(comment_id).then(() => {
-						setComments(comments);
-					});
+					if (clicked === false) {
+						upVoteComment(comment_id).then(() => {
+							setClicked(true);
+							setComments(comments);
+						});
+					} else {
+						setErr("You can only vote once");
+					}
 				}}
 			>
 				Upvote!
@@ -141,13 +148,19 @@ export const UpDownVoteGenerator = ({ comment_id, setComments, comments }) => {
 			<button
 				key={`${comment_id}DownVoteButton`}
 				onClick={() => {
-					downVoteComment(comment_id).then(() => {
-						setComments(comments);
-					});
+					if (clicked === false) {
+						downVoteComment(comment_id).then(() => {
+							setClicked(true);
+							setComments(comments);
+						});
+					} else {
+						setErr("You can only vote once!");
+					}
 				}}
 			>
 				Downvote!
 			</button>
+			<p>{err}</p>
 		</div>
 	);
 };

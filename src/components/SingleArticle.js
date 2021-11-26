@@ -4,25 +4,34 @@ import { getSingleArticle, getComments } from "../utils/articlesApi";
 import { AddCommentGenerator, ArticleCommentGenerator } from "./Comments";
 import { upVoteArticle, downVoteArticle } from "../utils/articlesApi";
 import UserContext from "../contexts/UserContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SingleArticle = () => {
 	const { article_id } = useParams();
 	const [article, setArticle] = useState({});
 	const [comments, setComments] = useState([]);
 	const { username } = useContext(UserContext);
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		getSingleArticle(article_id).then((articleFromApi) => {
-			setArticle(articleFromApi);
-		});
-	}, [article_id, article]);
+		getSingleArticle(article_id)
+			.then((articleFromApi) => {
+				setArticle(articleFromApi);
+			})
+			.catch((err) => {
+				navigate("/errorpage");
+			});
+	}, [article_id, article, navigate]);
 
 	useEffect(() => {
-		getComments(article_id).then((commentsFromApi) => {
-			setComments(commentsFromApi);
-		});
-	}, [article_id, comments]);
+		getComments(article_id)
+			.then((commentsFromApi) => {
+				setComments(commentsFromApi);
+			})
+			.catch((err) => {
+				navigate("/errorpage");
+			});
+	}, [article_id, comments, navigate]);
 
 	return (
 		<main>
