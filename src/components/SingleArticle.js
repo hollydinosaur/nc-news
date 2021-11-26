@@ -10,7 +10,7 @@ const SingleArticle = () => {
 	const { article_id } = useParams();
 	const [article, setArticle] = useState({});
 	const [comments, setComments] = useState([]);
-	const [votes, setVotes] = useState([]);
+	const [votes, setVotes] = useState("");
 	const { username } = useContext(UserContext);
 	const navigate = useNavigate();
 
@@ -33,7 +33,7 @@ const SingleArticle = () => {
 			.catch((err) => {
 				navigate("/errorpage");
 			});
-	}, [article_id, navigate]);
+	}, [article_id, comments, navigate]);
 
 	return (
 		<main>

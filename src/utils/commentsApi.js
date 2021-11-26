@@ -5,19 +5,34 @@ const commentsApi = axios.create({
 });
 
 export const upVoteComment = (id) => {
-	return commentsApi.patch(`/${id}`, { inc_votes: 1 }).then((res) => {
-		return res;
-	});
+	return commentsApi
+		.patch(`/${id}`, { inc_votes: 1 })
+		.then((res) => {
+			return res;
+		})
+		.catch((err) => {
+			return err.msg;
+		});
 };
 
 export const downVoteComment = (id) => {
-	return commentsApi.patch(`/${id}`, { inc_votes: -1 }).then((res) => {
-		return res;
-	});
+	return commentsApi
+		.patch(`/${id}`, { inc_votes: -1 })
+		.then((res) => {
+			return res;
+		})
+		.catch((err) => {
+			return err.msg;
+		});
 };
 
 export const deleteComment = (id) => {
-	return commentsApi.delete(`/${id}`).then((res) => {
-		return res;
-	});
+	return commentsApi
+		.delete(`/${id}`)
+		.then((res) => {
+			return res;
+		})
+		.catch((err) => {
+			return err.msg;
+		});
 };

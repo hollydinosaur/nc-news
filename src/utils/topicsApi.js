@@ -5,7 +5,12 @@ const topicsApi = axios.create({
 });
 
 export const getAllTopics = () => {
-	return topicsApi.get("/").then((res) => {
-		return res.data.topics;
-	});
+	return topicsApi
+		.get("/")
+		.then((res) => {
+			return res.data.topics;
+		})
+		.catch((err) => {
+			return err.msg;
+		});
 };

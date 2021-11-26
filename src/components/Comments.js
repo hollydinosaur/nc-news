@@ -8,6 +8,7 @@ import {
 import { addComment } from "../utils/articlesApi";
 import UserContext from "../contexts/UserContext";
 import { upVoteArticle, downVoteArticle } from "../utils/articlesApi";
+import { useNavigate } from "react-router";
 
 export const UserCommentGenerator = ({
 	articles,
@@ -134,18 +135,23 @@ export const AddCommentGenerator = ({ article_id, setComments, comments }) => {
 export const UpDownVoteGenerator = ({ comment_id, setComments, comments }) => {
 	const [clicked, setClicked] = useState(false);
 	const [err, setErr] = useState("");
+	const navigate = useNavigate();
 	return (
 		<div>
 			<button
 				key={`${comment_id}UpVoteButton`}
 				onClick={() => {
 					if (clicked === false) {
-						upVoteComment(comment_id).then(() => {
-							setClicked(true);
-							setComments(comments);
-						});
+						upVoteComment(comment_id)
+							.then(() => {
+								setClicked(true);
+								setComments(comments);
+							})
+							.catch((err) => {
+								navigate("/errorpage");
+							});
 					} else {
-						setErr("You can only vote once");
+						setErr("You can only vote once!");
 					}
 				}}
 			>
@@ -155,10 +161,14 @@ export const UpDownVoteGenerator = ({ comment_id, setComments, comments }) => {
 				key={`${comment_id}DownVoteButton`}
 				onClick={() => {
 					if (clicked === false) {
-						downVoteComment(comment_id).then(() => {
-							setClicked(true);
-							setComments(comments);
-						});
+						downVoteComment(comment_id)
+							.then(() => {
+								setClicked(true);
+								setComments(comments);
+							})
+							.catch((err) => {
+								navigate("/errorpage");
+							});
 					} else {
 						setErr("You can only vote once!");
 					}
@@ -171,14 +181,19 @@ export const UpDownVoteGenerator = ({ comment_id, setComments, comments }) => {
 	);
 };
 export const DeleteComment = ({ id, setUserComments, userComments }) => {
+	const navigate = useNavigate();
 	return (
 		<div>
 			<button
 				key={`${id}Delete`}
 				onClick={() => {
-					deleteComment(id).then(() => {
-						setUserComments(userComments);
-					});
+					deleteComment(id)
+						.then(() => {
+							setUserComments(userComments);
+						})
+						.catch((err) => {
+							navigate("/errorpage");
+						});
 				}}
 			>
 				Delete this comment
@@ -195,20 +210,25 @@ export const ArticleUpDownVoteGenerator = ({
 }) => {
 	const [clicked, setClicked] = useState(false);
 	const [err, setErr] = useState("");
+	const navigate = useNavigate();
 	return (
 		<div>
 			<button
 				key={`${article.article_id}UpVote`}
 				onClick={() => {
-					upVoteArticle(article_id).then(() => {
-						if (clicked === false) {
-							setClicked(true);
-							setVotes((prevVotes) => prevVotes + 1);
-							setArticle(article);
-						} else {
-							setErr("You can only vote once!");
-						}
-					});
+					upVoteArticle(article_id)
+						.then(() => {
+							if (clicked === false) {
+								setClicked(true);
+								setVotes((prevVotes) => prevVotes + 1);
+								setArticle(article);
+							} else {
+								setErr("You can only vote once!");
+							}
+						})
+						.catch((err) => {
+							navigate("/errorpage");
+						});
 				}}
 			>
 				Upvote!
@@ -217,11 +237,15 @@ export const ArticleUpDownVoteGenerator = ({
 				key={`${article.article_id}DownVote`}
 				onClick={() => {
 					if (clicked === false) {
-						downVoteArticle(article_id).then(() => {
-							setClicked(true);
-							setVotes((prevVotes) => prevVotes - 1);
-							setArticle(article);
-						});
+						downVoteArticle(article_id)
+							.then(() => {
+								setClicked(true);
+								setVotes((prevVotes) => prevVotes - 1);
+								setArticle(article);
+							})
+							.catch((err) => {
+								navigate("/errorpage");
+							});
 					} else {
 						setErr("You can only vote once!");
 					}

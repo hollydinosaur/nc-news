@@ -18,8 +18,8 @@ const AllUsers = () => {
 
 	return (
 		<main>
-			<section className="allUsers">
-				<h2>All Users</h2>
+			<h2>All Users</h2>
+			<div className="allUsers">
 				{users.map((user) => {
 					return (
 						<ul key={`${user.username}Details`}>
@@ -29,17 +29,15 @@ const AllUsers = () => {
 								</li>
 							</Link>
 							<li key={`${user.username}Name`}>Name: {user.name}</li>
-							<div className="imgDiv">
-								<img
-									src={user.avatar_url}
-									alt={user.username}
-									key={`${user.username}Img`}
-								/>{" "}
-							</div>
+							<img
+								src={user.avatar_url}
+								alt={user.username}
+								key={`${user.username}Img`}
+							/>{" "}
 						</ul>
 					);
 				})}
-			</section>
+			</div>
 		</main>
 	);
 };

@@ -11,7 +11,7 @@ export const getAllUsers = () => {
 			return res.data.users;
 		})
 		.catch((err) => {
-			return err;
+			return err.msg;
 		});
 };
 
@@ -22,7 +22,7 @@ export const getUserByUsername = (username) => {
 			return res.data.user;
 		})
 		.catch((err) => {
-			return err;
+			return err.msg;
 		});
 };
 
@@ -33,6 +33,6 @@ export const getCommentsByUser = (username) => {
 			return res.data.comments;
 		})
 		.catch((err) => {
-			return err;
+			return err.msg;
 		});
 };

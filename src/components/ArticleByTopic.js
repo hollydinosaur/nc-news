@@ -3,17 +3,24 @@ import { getArticlesByTopic } from "../utils/articlesApi";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import FilterButtons from "./FilterButtons";
-
+import { useNavigate } from "react-router";
 const ArticleByTopic = () => {
 	const { topic } = useParams();
 	const [sortBy, setSortBy] = useState("created_at");
 	const [order, setOrder] = useState("ASC");
 	const [topicArticles, setTopicArticles] = useState([]);
+	const navigate = useNavigate();
 	useEffect(() => {
-		getArticlesByTopic({ sortBy, order, topic }).then((articlesfromApi) => {
-			setTopicArticles(articlesfromApi);
-		});
-	}, [topic, sortBy, order]);
+		getArticlesByTopic({ sortBy, order, topic })
+			.then((articlesfromApi) => {
+				if (articlesfromApi[0].title === undefined) navigate("/errorpage");
+				setTopicArticles(articlesfromApi);
+			})
+			.catch((err) => {
+				navigate("/errorpage");
+			});
+	}, [topic, sortBy, order, navigate]);
+
 	return (
 		<main>
 			<h2>Articles about {topic}</h2>

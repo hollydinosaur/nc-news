@@ -53,3 +53,12 @@ li {
 .Titles {
 	font-size: 30px;
 }
+
+.allUsers {
+	display: inline-grid;
+	grid-template-rows: 17pc 17pc 17pc;
+	grid-template-columns: 15pc 15pc 15pc;
+	height: 80vh;
+	width: min-content;
+	padding: 8pc;
+}
