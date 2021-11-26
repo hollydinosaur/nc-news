@@ -10,26 +10,6 @@ const FilterButtons = ({ setCurrentTopic, setOrder, setSortBy }) => {
 	}, []);
 	return (
 		<section className="filterButtons">
-			<button
-				key="allButton"
-				onClick={() => {
-					setCurrentTopic("All");
-				}}
-			>
-				All
-			</button>
-			{topics.map((topic) => {
-				return (
-					<button
-						key={`${topic.slug}Select`}
-						onClick={() => {
-							setCurrentTopic(topic.slug);
-						}}
-					>
-						{topic.slug}
-					</button>
-				);
-			})}
 			<p>
 				Order:
 				<button

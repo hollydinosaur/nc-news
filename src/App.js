@@ -15,20 +15,20 @@ import { getAllArticles } from "./utils/articlesApi";
 function App() {
 	const [username, setUsername] = useState("");
 	const [articles, setArticles] = useState([]);
-	const [currentTopic, setCurrentTopic] = useState("coding");
+	const [currentTopic, setCurrentTopic] = useState("All");
 	const [order, setOrder] = useState("ASC");
 	const [sortBy, setSortBy] = useState("topic");
 	useEffect(() => {
-		getAllArticles({ sortBy, order, currentTopic }).then((articlesfromApi) => {
-			// let copied = [...articlesfromApi];
-			// if (currentTopic === "All") {
-			// 	setArticles(articlesfromApi);
-			// } else {
-			// 	const filtered = copied.filter((article) => {
-			// 		return article.topic === currentTopic;
-			// 	});
-			return setArticles(articlesfromApi);
-			// }
+		getAllArticles({ sortBy, order }).then((articlesfromApi) => {
+			let copied = [...articlesfromApi];
+			if (currentTopic === "All") {
+				setArticles(articlesfromApi);
+			} else {
+				const filtered = copied.filter((article) => {
+					return article.topic === currentTopic;
+				});
+				return setArticles(filtered);
+			}
 		});
 	}, [currentTopic, order, sortBy]);
 	return (
