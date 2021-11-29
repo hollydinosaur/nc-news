@@ -2,7 +2,6 @@
 	text-align: center;
 }
 @import url("https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=BenchNine:wght@300&display=swap");
 
 * {
 	text-align: center;
@@ -39,6 +38,7 @@ h2 {
 }
 .NavBar {
 	border-bottom: #f9d18b solid;
+	text-transform: capitalize;
 }
 
 .topicLinks {
@@ -60,5 +60,29 @@ li {
 	grid-template-columns: 15pc 15pc 15pc;
 	height: 80vh;
 	width: min-content;
-	padding: 8pc;
+}
+
+.allArticles {
+	display: inline-grid;
+	grid-template-rows: 20pc 20pc 20pc;
+	grid-template-columns: 17pc 17pc 17pc;
+	height: 100vh;
+	width: min-content;
+}
+
+button {
+	background-color: rgb(37, 150, 190);
+	border: solid black 0.5px;
+	color: white;
+	padding: 2px, 3px;
+	margin: 2px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	border-radius: 10%;
+}
+
+button:hover {
+	box-shadow: 0 2px 2px 0 rgb(37, 150, 190), 0 4px 20px 0 rgb(37, 150, 190);
 }

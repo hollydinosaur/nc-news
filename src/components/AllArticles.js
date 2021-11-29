@@ -5,8 +5,10 @@ import FilterButtons from "./FilterButtons";
 const AllArticles = ({ articles, setOrder, setSortBy }) => {
 	return (
 		<main>
-			<section className="allArticles">
+			<section className="filterButtons">
 				<FilterButtons setOrder={setOrder} setSortBy={setSortBy} />
+			</section>
+			<section className="allArticles">
 				{articles.map((article) => {
 					return (
 						<ul key={`${article.article_id}Details`}>

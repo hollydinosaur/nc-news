@@ -3,7 +3,7 @@ const FilterButtons = ({ setOrder, setSortBy }) => {
 	return (
 		<section className="filterButtons">
 			<p>
-				Order:
+				Order:{`   `}
 				<button
 					key="ascOrderButton"
 					onClick={() => {
@@ -22,7 +22,7 @@ const FilterButtons = ({ setOrder, setSortBy }) => {
 				</button>
 			</p>
 			<p>
-				Sort by:
+				Sort by:{`   `}
 				<button
 					key="createdAt"
 					onClick={() => {
